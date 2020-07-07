@@ -10,16 +10,16 @@ import {
 
 import screens from '../GlobalConstants/Screens';
 
-import HomeScreen from '../Screens/Home/HomeScreen'
+import TimelineScreen from '../Screens/Timeline/TimelineScreen'
 
-export default function MainRouter() {
+export default function TimelineRouter() {
     let match = useRouteMatch();
 
     return (
         <div>
             <Switch>
-                <Route path={screens.HomeScreen}>
-                    <HomeScreen />
+                <Route path={screens.TimelineScreen}>
+                    <TimelineScreen />
                 </Route>
             </Switch>
         </div>

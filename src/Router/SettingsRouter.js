@@ -10,16 +10,16 @@ import {
 
 import screens from '../GlobalConstants/Screens';
 
-import HomeScreen from '../Screens/Home/HomeScreen'
+import SettingsScreen from '../Screens/Settings/SettingsScreen'
 
-export default function MainRouter() {
+export default function SettingsRouter() {
     let match = useRouteMatch();
 
     return (
         <div>
             <Switch>
-                <Route path={screens.HomeScreen}>
-                    <HomeScreen />
+                <Route path={screens.SettingsScreen}>
+                    <SettingsScreen />
                 </Route>
             </Switch>
         </div>
