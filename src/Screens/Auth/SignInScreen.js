@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Form, Button } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { post } from '../../GlobalConstants/ApiCalls'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
 import screens from '../../GlobalConstants/Screens'
-
+import AuthContext from '../../Contexts/AuthContext'
 
 export default function SignInScreen(props) {
     const [redirect,setRedirect] = useState("");
@@ -15,6 +15,7 @@ export default function SignInScreen(props) {
     const [userNameOrEmail, setUserNameOrEmail] = useState("");
     const [passward, setPassward] = useState("");
 
+    const {setSignedIn} = useContext(AuthContext);
     const hundleFormSubmission = async (event) => {
         event.preventDefault();
 
@@ -33,6 +34,7 @@ export default function SignInScreen(props) {
         else{
             localStorage.setItem("TOKEN",data.response.token);
             localStorage.setItem("USERID",data.response.userId);
+            setSignedIn(true);
             setRedirect(screens.TimelineRouter);
         }
         

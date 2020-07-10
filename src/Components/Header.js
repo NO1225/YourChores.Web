@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 
 import screens from '../GlobalConstants/Screens'
+import AuthContext from '../Contexts/AuthContext'
 
 export default function Header() {
+    const { signedIn } = useContext(AuthContext);
+
+
     return (
         <Navbar className="rtl" bg="light" expand="lg">
             <Link to={screens.HomeScreen}><Navbar.Brand>واجباتي</Navbar.Brand></Link>
@@ -17,9 +21,19 @@ export default function Header() {
                     <Link to={screens.SettingsRouter}><Nav.Link href="#home">الاعدادات</Nav.Link></Link>
                 </Nav>
                 <Nav className="mr-auto">
-                    <Link to={screens.SignInScreen}><Nav.Link href="#home">تسجيل دخول</Nav.Link></Link>
-                    <Link to={screens.SignUpScreen}><Nav.Link href="#home">انشاء حساب</Nav.Link></Link>
-                    <Link to={screens.SignUpScreen}><Nav.Link href="#home">تسجيل خروج</Nav.Link></Link>
+                    {signedIn ?
+                        <Link to={screens.SignUpScreen}><Nav.Link href="#home">تسجيل خروج</Nav.Link></Link>
+                        : null
+                    }
+                    {!signedIn ?
+                        <Link to={screens.SignInScreen}><Nav.Link href="#home">تسجيل دخول</Nav.Link></Link>
+                        : null
+                    }
+                    {!signedIn ?
+                        <Link to={screens.SignUpScreen}><Nav.Link href="#home">انشاء حساب</Nav.Link></Link>
+                        : null
+                    }
+
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
