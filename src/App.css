@@ -1,7 +1,22 @@
-h1 {
-  color: red;
-}
 
 .rtl {
   direction:rtl;
+}
+
+
+.auth-container{
+  max-width:  60%;
+  padding: 40px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: right;
+  background-color: rgb(233, 233, 233);
+  border-radius: 5px;
+}
+
+.navigation-link{
+  text-decoration: none;
+  color: blue;
+  padding: 20px;
 }

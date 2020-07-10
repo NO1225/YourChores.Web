@@ -13,11 +13,13 @@ import screens from '../GlobalConstants/Screens';
 import SignInScreen from '../Screens/Auth/SignInScreen'
 import SignUpScreen from '../Screens/Auth/SignUpScreen'
 
+import AuthLayout from './../Components/AuthLayout'
+
 export default function AuthRouter() {
     let match = useRouteMatch();
 
     return (
-        <div>
+        <AuthLayout>
             <Switch>
                 <Route path={screens.SignInScreen}>
                     <SignInScreen />
@@ -26,7 +28,7 @@ export default function AuthRouter() {
                     <SignUpScreen />
                 </Route>
             </Switch>
-        </div>
+        </AuthLayout>
 
     )
 }
