@@ -5,10 +5,18 @@ import { Link } from "react-router-dom";
 
 import screens from '../GlobalConstants/Screens'
 import AuthContext from '../Contexts/AuthContext'
+import UserContext from '../Contexts/UserContext'
 
 export default function Header() {
-    const { signedIn } = useContext(AuthContext);
+    const { signedIn,setSignedIn } = useContext(AuthContext);
+    const { userInfo, setUserInfo } = useContext(UserContext)
 
+    const signOut = async() =>{
+        await localStorage.removeItem("TOKEN");
+        await localStorage.removeItem("USERID");
+        setSignedIn(false);
+        setUserInfo({});
+    }
 
     return (
         <Navbar className="rtl" bg="light" expand="lg">
@@ -22,11 +30,15 @@ export default function Header() {
                 </Nav>
                 <Nav className="mr-auto">
                     {signedIn ?
-                        <Link to={screens.SignUpScreen}><Nav.Link href="#home">تسجيل خروج</Nav.Link></Link>
+                        <Link><Nav.Link href="#home">مرحبا {userInfo.userName}</Nav.Link></Link>
+                        : null
+                    }
+                    {signedIn ?
+                        <Link onClick={signOut} ><Nav.Link href="#home">تسجيل خروج</Nav.Link></Link>
                         : null
                     }
                     {!signedIn ?
-                        <Link to={screens.SignInScreen}><Nav.Link href="#home">تسجيل دخول</Nav.Link></Link>
+                        <Link to={screens.SignInScreen} ><Nav.Link href="#home">تسجيل دخول</Nav.Link></Link>
                         : null
                     }
                     {!signedIn ?

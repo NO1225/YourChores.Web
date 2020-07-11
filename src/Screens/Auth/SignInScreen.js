@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 
-import { post } from '../../GlobalConstants/ApiCalls'
+import { post, authGet } from '../../GlobalConstants/ApiCalls'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
 import screens from '../../GlobalConstants/Screens'
 import AuthContext from '../../Contexts/AuthContext'
@@ -16,6 +16,19 @@ export default function SignInScreen(props) {
     const [passward, setPassward] = useState("");
 
     const {setSignedIn} = useContext(AuthContext);
+
+    const getUserInfo = async()=>{
+        var data = await authGet(apiRoutes.GetMyInfo);
+
+        if(data.success)
+        {
+            await localStorage.setItem("FIRSTNAME",data.response.firstName);
+            await localStorage.setItem("LASTNAME",data.response.lastName);
+            await localStorage.setItem("USERNAME",data.response.userName);
+            await localStorage.setItem("EMAIL",data.response.email);
+        }
+    }
+
     const hundleFormSubmission = async (event) => {
         event.preventDefault();
 
@@ -32,9 +45,12 @@ export default function SignInScreen(props) {
             setErrorMessage(errorstring);
         }
         else{
-            localStorage.setItem("TOKEN",data.response.token);
-            localStorage.setItem("USERID",data.response.userId);
+            await localStorage.setItem("TOKEN",data.response.token);
+            await localStorage.setItem("USERID",data.response.userId);
             setSignedIn(true);
+
+            await getUserInfo();
+
             setRedirect(screens.TimelineRouter);
         }
         

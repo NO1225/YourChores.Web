@@ -6,17 +6,17 @@ import screens from '../GlobalConstants/Screens'
  
 
 
-export default function AuthLayout(props) {
+export default function MainLayout(props) {
     const { signedIn } = useContext(AuthContext);
 
-    if (signedIn) {
+    if (signedIn == false) {
         return (
-            <Redirect to={screens.TimelineRouter} />
+            <Redirect to={screens.SignInScreen} />
         )
     }
     
     return (
-        <div className="auth-container rtl">
+        <div className="container rtl">
             {props.children}
         </div>
     )
