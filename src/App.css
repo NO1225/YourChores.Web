@@ -1,6 +1,7 @@
 
 .rtl {
   direction:rtl;
+  text-align: right;
 }
 
 
@@ -19,4 +20,23 @@
   text-decoration: none;
   color: blue;
   padding: 20px;
+}
+
+.footer{
+  bottom: 0px;
+  position: absolute;
+}
+
+.setting-item-title{
+  padding: 5px;
+  font-weight: 700;
+}
+
+.setting-item-text{
+  padding: 5px;
+
+}
+.setting-item-icon{
+  margin: 5px;
+
 }
