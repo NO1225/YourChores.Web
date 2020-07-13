@@ -18,10 +18,9 @@ export default function SettingItemComponent(props) {
 
     }
     const hundleSaving = async () => {
-        props.onSave(value);
+        await props.onSave(value);
 
         setEditing(false);
-
     }
 
 
@@ -31,10 +30,14 @@ export default function SettingItemComponent(props) {
                 <p className="setting-item-title">
                     {props.title}
                 </p>
-                <p className="setting-item-text">
-                    {props.value}
-                </p>
-                <Form.Control placeholder={props.value} value={value} onChange={(e) => setValue(e.target.value)} />
+                <div className="control-container">
+                    <p className="setting-item-text">
+                        {props.value}
+                    </p>
+
+                    <Form.Control placeholder={props.value} value={value} onChange={(e) => setValue(e.target.value)} />
+                </div>
+
 
                 <FontAwesomeIcon onClick={hundleSaving} className="setting-item-icon" icon={faCheck} />
                 <FontAwesomeIcon onClick={hundleCanceling} className="setting-item-icon" icon={faTimes} />

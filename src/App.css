@@ -40,3 +40,11 @@
   margin: 5px;
 
 }
+
+.error-message{
+  color: red;
+}
+
+.control-container{
+  margin: 5px;
+}

@@ -3,9 +3,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../Contexts/UserContext'
 
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes';
-import { authGet } from '../../GlobalConstants/ApiCalls'
+import { authGet, authPost } from '../../GlobalConstants/ApiCalls'
 
 import SettingItemComponent from '../../Components/SettingItemComponent'
+import SettingPasswordComponent from '../../Components/SettingPasswordComponent'
 
 export default function SettingsScreen(props) {
     const { userInfo, setUserInfo } = useContext(UserContext);
@@ -18,8 +19,46 @@ export default function SettingsScreen(props) {
         }
     }
 
-    const changeFirstName = async (value)=>{
-        console.log(value);
+    const changeFirstName = async (value) => {
+        var data = await authPost(apiRoutes.ChangeName, {
+            firstname: value
+        });
+
+        if (data.success) {
+            await getUserInfo();
+        }
+        else {
+            console.log(data.errors);
+        }
+
+    }
+
+    const changeLastName = async (value) => {
+        var data = await authPost(apiRoutes.ChangeName, {
+            lastname: value
+        });
+
+        if (data.success) {
+            await getUserInfo();
+        }
+        else {
+            console.log(data.errors);
+        }
+
+    }
+
+    const ChangePassward = async (oldPassward, newPassward) => {
+        var data = await authPost(apiRoutes.ChangePassward, {
+            oldPassward, newPassward
+        });
+
+        if (data.success) {
+            await getUserInfo();
+        }
+        else {
+            console.log(data.errors);
+        }
+
     }
 
     useEffect(() => {
@@ -30,10 +69,11 @@ export default function SettingsScreen(props) {
 
     return (
         <div>
-            <SettingItemComponent editable title="الاسم الاول:" value={userInfo.firstName} onSave={changeFirstName}/>
-            <SettingItemComponent editable title="الاسم الاخير:" value={userInfo.lastName}/>
-            <SettingItemComponent title="اسم المستخدم:" value={userInfo.userName}/>
-            <SettingItemComponent title="الايميل:" value={userInfo.email}/>
+            <SettingItemComponent editable title="الاسم الاول:" value={userInfo.firstName} onSave={changeFirstName} />
+            <SettingItemComponent editable title="الاسم الاخير:" value={userInfo.lastName} onSave={changeLastName} />
+            <SettingItemComponent title="اسم المستخدم:" value={userInfo.userName} />
+            <SettingItemComponent title="الايميل:" value={userInfo.email} />
+            <SettingPasswordComponent editable title="كلمة المرور:" onSave={ChangePassward} />
         </div>
     )
 }
