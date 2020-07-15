@@ -7,4 +7,7 @@ exports.apiRoutes ={
     GetMyInfo: API_URL + `api/Auth/GetMyInfo`,
     ChangeName: API_URL + `api/Auth/ChangeName`,
     ChangePassward: API_URL + `api/Auth/ChangePassward`,
+
+    GetMyRooms : API_URL + `api/Rooms`,
+    CreateRoom : API_URL + `api/Rooms`
 }

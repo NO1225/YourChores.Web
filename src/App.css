@@ -48,3 +48,37 @@
 .control-container{
   margin: 5px;
 }
+
+.room-container{
+  border-style: solid;
+  border-width: 1px;
+  border-color: royalblue;
+
+  display: grid;
+  grid-template-columns: 1fr 20px;
+}
+
+.room-container:hover{
+  background: linear-gradient(0deg, rgb(188, 188, 240) 0%, rgb(255, 255, 255) 50%, rgba(188, 188, 240) 100%);
+}
+
+.room-container div{
+  padding: 10px;
+}
+
+.right-banner{
+  padding: 0;
+  height: 100%;
+}
+
+.low-urgency{
+  background-color: green;
+}
+
+.medium-urgency{
+  background-color: yellow;
+}
+
+.high-urgency{
+  background-color: red;
+}

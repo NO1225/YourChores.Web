@@ -23,5 +23,7 @@ screens.SettingsScreen = screens.SettingsRouter + '/';
 // Main/Rooms
 screens.RoomsRouter = screens.MainRouter + '/Rooms';
 screens.RoomsScreen = screens.RoomsRouter + '/';
+screens.RoomDetails = screens.RoomsRouter + '/RoomDetails/:roomId';
+screens.goToRoomDetails = (roomId)=> screens.RoomsRouter + `/RoomDetails/${roomId}`;
 
 module.exports = screens;
