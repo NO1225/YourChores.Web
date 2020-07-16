@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import screens from '../../GlobalConstants/Screens'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
-import { authPost, authGet } from '../../GlobalConstants/ApiCalls'
+import { authGet } from '../../GlobalConstants/ApiCalls'
 
 import RoomComponent from '../../Components/RoomComponent'
+import CreateRoomComponent from '../../Components/CreateRoomComponent'
+import Modal from '../../Components/ModalComponent'
 
 export default function RoomsScreen(props) {
     const [rooms, setRooms] = useState([])
-    const [redirect,setRedirect] = useState("");
-
+    const [redirect, setRedirect] = useState("");
+    const [roomCreationPopupVisible, setRoomCreationPopupVisible] = useState(false);
+    
 
     const getMyRooms = async () => {
         var data = await authGet(apiRoutes.GetMyRooms);
@@ -20,9 +23,21 @@ export default function RoomsScreen(props) {
         }
     }
 
-    const goToRoom = (roomId)=>{
+    const goToRoom = (roomId) => {
         console.log(roomId);
         setRedirect(screens.goToRoomDetails(roomId));
+    }
+
+    const hundleRoomCreationPopUp = () => {
+        setRoomCreationPopupVisible(!roomCreationPopupVisible);
+    }
+
+    const hundleRoomCreationEnd = (value)=>{
+        if(true)
+        {
+            getMyRooms();
+        }
+        hundleRoomCreationPopUp();
     }
 
     useEffect(() => {
@@ -33,19 +48,30 @@ export default function RoomsScreen(props) {
     }, [])
 
 
-    if(redirect)
-    {
-        return(
-            <Redirect to={redirect}/>
+    if (redirect) {
+        return (
+            <Redirect to={redirect} />
         )
     }
 
 
     return (
         <div>
-            <div>Rooms</div>
+
+            <Modal visible={roomCreationPopupVisible}>
+                <CreateRoomComponent onFormEnd={hundleRoomCreationEnd}/>
+            </Modal>
+
+            <div className="d-flex justify-content-between m-3">
+                <div>
+                    الغرف
+                </div>
+                <div>
+                    <button className="btn btn-light" onClick={hundleRoomCreationPopUp} type="button" >عمل غرفة جديدة</button>
+                </div>
+            </div>
             {rooms.map(room => (
-                <RoomComponent key={`${room.roomIs}`} room={room} onPress={goToRoom}/>
+                <RoomComponent key={`${room.roomIs}`} room={room} onPress={goToRoom} />
             ))}
 
         </div>

@@ -4,6 +4,10 @@
   text-align: right;
 }
 
+.ltr {
+  direction:ltr;
+}
+
 
 .auth-container{
   max-width:  60%;
@@ -54,6 +58,7 @@
   border-width: 1px;
   border-color: royalblue;
 
+  margin: 2px;
   display: grid;
   grid-template-columns: 1fr 20px;
 }
@@ -81,4 +86,24 @@
 
 .high-urgency{
   background-color: red;
+}
+
+.pop-up{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.pop-up-content{
+  min-width: 50%;
+  margin: auto;
+  background-color:  rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
