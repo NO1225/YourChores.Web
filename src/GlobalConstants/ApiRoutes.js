@@ -9,5 +9,7 @@ exports.apiRoutes ={
     ChangePassward: API_URL + `api/Auth/ChangePassward`,
 
     GetMyRooms : API_URL + `api/Rooms`,
-    CreateRoom : API_URL + `api/Rooms`
+    CreateRoom : API_URL + `api/Rooms`,
+    GetRoomById : (roomId) => API_URL + `api/Rooms/getRoomById/${roomId}`,
+    
 }

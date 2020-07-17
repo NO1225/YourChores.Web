@@ -107,3 +107,23 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+
+.chore-container{
+  border-style: solid;
+  border-width: 1px;
+  border-color: royalblue;
+
+  margin: 2px;
+  display: grid;
+  grid-template-columns: 1fr 40px 20px;
+}
+
+.chore-container:hover{
+  background: linear-gradient(0deg, rgb(188, 188, 240) 0%, rgb(255, 255, 255) 50%, rgba(188, 188, 240) 100%);
+}
+
+
+.chore-container div{
+  padding: 10px;
+}
