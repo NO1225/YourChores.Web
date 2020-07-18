@@ -13,5 +13,6 @@ exports.apiRoutes ={
     GetRoomById : (roomId) => API_URL + `api/Rooms/getRoomById/${roomId}`,
 
     UpdateChore : API_URL + `api/Chores/Update`,
+    CreateChore : API_URL + `api/Chores`,
     
 }

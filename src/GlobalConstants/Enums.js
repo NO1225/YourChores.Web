@@ -16,3 +16,17 @@ exports.urgency = {
         }
     }
 }
+
+exports.papulateOptions = (enums) => {
+    var options = [];
+    for (var key in enums) {
+        if (enums.hasOwnProperty(key) && key != 'translate') {
+            options.push({
+                value: enums[key],
+                text: enums.translate(enums[key]),
+                key: `${enums[key]}`
+            })
+        }
+    }
+    return options;
+}
