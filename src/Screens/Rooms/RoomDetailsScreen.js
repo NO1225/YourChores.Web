@@ -17,6 +17,12 @@ export default function RoomDetailsScreen(props) {
 
         if(data.success)
         {
+            let choresResponse = data.response.chores;
+
+            choresResponse.forEach(chore => {
+                chore.roomId = roomId;
+            });
+
             setChores(data.response.chores);
             setRoomName(data.response.roomName);
         }
@@ -33,7 +39,7 @@ export default function RoomDetailsScreen(props) {
         <div>
             <div className="d-flex justify-content-between m-3">تفاصيل غرفة {roomName} </div>
             {chores.map(chore=>
-                <ChoreComponent chore={chore} />
+                <ChoreComponent chore={chore} onUpdate={getRoomDetails} />
             )}
         </div>
     )
