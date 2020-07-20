@@ -50,7 +50,7 @@ export default function CreateRoomComponent(props) {
             </Form.Group>
 
             <Form.Group className="ltr d-flex justify-content-around">
-                <Form.Check label="السماح للاعضاء بالنشر" value={allowMembersToPost} onChange={(e) => setAllowMembersToPost(e.target.value)} />
+                <Form.Check label="السماح للاعضاء بالنشر" checked={allowMembersToPost} onChange={(e) => setAllowMembersToPost(e.target.checked)} />
             </Form.Group>
 
             <div className="d-flex justify-content-between m-3">

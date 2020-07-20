@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, redirect, Redirect } from 'react-router-dom'
 
 import screens from '../../GlobalConstants/Screens'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
@@ -12,9 +12,12 @@ import Modal from '../../Components/ModalComponent'
 export default function RoomDetailsScreen(props) {
     let { roomId } = useParams();
 
+    const [redirect, setRedirect] = useState("");
+
     const [chores, setChores] = useState([])
     const [roomName, setRoomName] = useState("");
     const [allowChoreCreation, setAllowChoreCreation] = useState(false);
+    const [isOwner, setIsOwener] = useState(false);
     const [choreCreationPopupVisible, setChoreCreationPopupVisible] = useState(false);
 
 
@@ -30,6 +33,7 @@ export default function RoomDetailsScreen(props) {
 
             setChores(data.response.chores);
             setRoomName(data.response.roomName);
+            setIsOwener(data.response.isOwner);
             var allow = false;
 
             if (data.response.isOwner) {
@@ -54,6 +58,12 @@ export default function RoomDetailsScreen(props) {
         hundleChoreCreation();
     }
 
+    const redirectToRoomSettings = () => {
+        setRedirect(screens.goToRoomSettings(roomId));
+
+    }
+
+
 
     useEffect(() => {
         getRoomDetails()
@@ -61,6 +71,11 @@ export default function RoomDetailsScreen(props) {
 
         }
     }, [])
+    if (redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
 
     return (
         <div>
@@ -75,6 +90,11 @@ export default function RoomDetailsScreen(props) {
                 {allowChoreCreation ?
                     <div>
                         <button className="btn btn-light" onClick={hundleChoreCreation} type="button" >عمل واجب جديد</button>
+                    </div>
+                    : null}
+                {isOwner ?
+                    <div>
+                        <button className="btn btn-light" onClick={redirectToRoomSettings} type="button" >اعدادات الغرفة</button>
                     </div>
                     : null}
             </div>

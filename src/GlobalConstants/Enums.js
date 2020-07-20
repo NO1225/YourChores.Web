@@ -17,6 +17,23 @@ exports.urgency = {
     }
 }
 
+
+exports.joinRequestType = {
+    Join: 1,
+    Invite: 2,
+    translate: (value) => {
+        switch (value) {
+            case 1:
+            case '1':
+                return "طلب انظمام";
+            case 2:
+            case '2':
+                return "دعوة";
+
+        }
+    }
+}
+
 exports.papulateOptions = (enums) => {
     var options = [];
     for (var key in enums) {
