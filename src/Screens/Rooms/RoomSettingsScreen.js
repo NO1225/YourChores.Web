@@ -10,6 +10,7 @@ import { joinRequestType } from '../../GlobalConstants/Enums'
 import ChoreComponent from '../../Components/ChoreComponent'
 import CreateChoreComponent from '../../Components/CreateChoreComponent'
 import Modal from '../../Components/ModalComponent'
+import CollapsiblePanelComponent from '../../Components/CollapsiblePanelComponent';
 
 export default function RoomDetailsScreen(props) {
     let { roomId } = useParams();
@@ -21,6 +22,7 @@ export default function RoomDetailsScreen(props) {
     const [invitations, setInvitations] = useState([]);
     const [allowMembersToPost, setAllowMembersToPost] = useState(false);
 
+    const [collabsed, setCollabsed] = useState(true);
 
     const getRoomDetails = async () => {
         var data = await authGet(apiRoutes.GetRoomById(roomId));
@@ -71,15 +73,20 @@ export default function RoomDetailsScreen(props) {
                     اعدادات غرفة {roomName}
                 </div>
                 <Form.Group className="ltr d-flex justify-content-around">
-                    <Form.Check label="السماح للاعضاء بالنشر" checked={allowMembersToPost} onChange={(e) => changeAllowMemberToPost(e.target.checked)} />
+                    <Form.Check label="السماح للاعضاء بالنشر" defaultChecked={allowMembersToPost} onChange={(e) => changeAllowMemberToPost(e.target.checked)} />
                 </Form.Group>
             </div>
 
-            {roomMembers.map(
-                member => (
-                    <p>{member.firstName} {member.lastName}</p>
-                )
-            )}
+            <CollapsiblePanelComponent title="المالكين">
+                {owners.map(
+                    member => (
+                        <p key={member.userId}>{member.firstName} {member.lastName}</p>
+                    )
+                )}
+            </CollapsiblePanelComponent>
+
+
+
         </div>
     )
 }

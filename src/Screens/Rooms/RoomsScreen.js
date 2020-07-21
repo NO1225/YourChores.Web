@@ -71,7 +71,7 @@ export default function RoomsScreen(props) {
                 </div>
             </div>
             {rooms.map(room => (
-                <RoomComponent key={`${room.roomIs}`} room={room} onPress={goToRoom} />
+                <RoomComponent key={`${room.roomId}`} room={room} onPress={goToRoom} />
             ))}
 
         </div>

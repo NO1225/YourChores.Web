@@ -52,7 +52,7 @@ export default function SettingItemComponent(props) {
                     : null}
             </div>
             <div className="d-flex align-items-center">
-                <input type="checkbox" checked={chore.done} onClick={hundleClicking} />
+                <input type="checkbox" defaultChecked={chore.done} onClick={hundleClicking} />
             </div>
             <div className={getClassName()}></div>
         </div>

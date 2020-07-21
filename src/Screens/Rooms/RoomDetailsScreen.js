@@ -99,7 +99,7 @@ export default function RoomDetailsScreen(props) {
                     : null}
             </div>
             {chores.map(chore =>
-                <ChoreComponent chore={chore} onUpdate={getRoomDetails} />
+                <ChoreComponent key={chore.choreId} chore={chore} onUpdate={getRoomDetails} />
             )}
         </div>
     )
