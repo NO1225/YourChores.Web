@@ -122,3 +122,14 @@
 .chore-container div{
   padding: 10px;
 }
+
+.card-container{
+  border-style: solid;
+  border-width: 1px;
+  border-color: royalblue;
+
+  margin: 2px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+

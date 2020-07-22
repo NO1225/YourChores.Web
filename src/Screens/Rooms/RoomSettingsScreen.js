@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
+
 
 import screens from '../../GlobalConstants/Screens'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
@@ -11,6 +13,7 @@ import ChoreComponent from '../../Components/ChoreComponent'
 import CreateChoreComponent from '../../Components/CreateChoreComponent'
 import Modal from '../../Components/ModalComponent'
 import CollapsiblePanelComponent from '../../Components/CollapsiblePanelComponent';
+import CardComponent from '../../Components/CardComponent';
 
 export default function RoomDetailsScreen(props) {
     let { roomId } = useParams();
@@ -58,6 +61,10 @@ export default function RoomDetailsScreen(props) {
         }
     }
 
+    const demoteAdmin = async (userId) => {
+        console.log(userId);
+    }
+
     useEffect(() => {
         getRoomDetails()
         return () => {
@@ -79,9 +86,20 @@ export default function RoomDetailsScreen(props) {
 
             <CollapsiblePanelComponent title="المالكين">
                 {owners.map(
-                    member => (
-                        <p key={member.userId}>{member.firstName} {member.lastName}</p>
-                    )
+                    member => {
+                        var buttons = [];
+                        buttons.push({
+                            icon: faArrowDown,
+                            onPress: demoteAdmin
+                        })
+                        buttons.push({
+                            icon: faArrowUp,
+                            onPress: demoteAdmin
+                        })
+                        return (
+                            <CardComponent id={member.userId} texts={["المالك",`${member.firstName} ${member.lastName}`]} buttons={buttons} />
+                        )
+                    }
                 )}
             </CollapsiblePanelComponent>
 
