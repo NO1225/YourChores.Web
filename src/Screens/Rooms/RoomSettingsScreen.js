@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
-import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faArrowUp, faTimes, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
 import screens from '../../GlobalConstants/Screens'
@@ -14,6 +14,7 @@ import CreateChoreComponent from '../../Components/CreateChoreComponent'
 import Modal from '../../Components/ModalComponent'
 import CollapsiblePanelComponent from '../../Components/CollapsiblePanelComponent';
 import CardComponent from '../../Components/CardComponent';
+import UserContext from '../../Contexts/UserContext';
 
 export default function RoomDetailsScreen(props) {
     let { roomId } = useParams();
@@ -24,6 +25,8 @@ export default function RoomDetailsScreen(props) {
     const [joinRequests, setJoinRequests] = useState([]);
     const [invitations, setInvitations] = useState([]);
     const [allowMembersToPost, setAllowMembersToPost] = useState(false);
+
+    const { userInfo } = useContext(UserContext);
 
     const [collabsed, setCollabsed] = useState(true);
 
@@ -65,6 +68,26 @@ export default function RoomDetailsScreen(props) {
         console.log(userId);
     }
 
+    const promoteMember = async (userId) => {
+        console.log(userId);
+    }
+
+    const kickMember = async (userId) => {
+        console.log(userId);
+    }
+
+    const acceptRequest = async (requestId) => {
+        console.log(requestId);
+    }
+
+    const cancelRequest = async (requestId) => {
+        console.log(requestId);
+    }
+
+    const declineRequest = async (requestId) => {
+        console.log(requestId);
+    }
+
     useEffect(() => {
         getRoomDetails()
         return () => {
@@ -92,16 +115,81 @@ export default function RoomDetailsScreen(props) {
                             icon: faArrowDown,
                             onPress: demoteAdmin
                         })
-                        buttons.push({
-                            icon: faArrowUp,
-                            onPress: demoteAdmin
-                        })
+
+                        if (member.userId != userInfo.id) {
+                            buttons.push({
+                                icon: faBan,
+                                onPress: kickMember
+                            })
+                        }
+
+
                         return (
-                            <CardComponent id={member.userId} texts={["المالك",`${member.firstName} ${member.lastName}`]} buttons={buttons} />
+                            <CardComponent id={member.userId} texts={[`${member.firstName} ${member.lastName}`]} buttons={buttons} />
                         )
                     }
                 )}
             </CollapsiblePanelComponent>
+
+            <CollapsiblePanelComponent title="الاعضاء">
+                {roomMembers.map(
+                    member => {
+                        var buttons = [];
+
+                        buttons.push({
+                            icon: faArrowUp,
+                            onPress: promoteMember
+                        })
+
+                        buttons.push({
+                            icon: faBan,
+                            onPress: kickMember
+                        })
+                        return (
+                            <CardComponent id={member.userId} texts={[`${member.firstName} ${member.lastName}`]} buttons={buttons} />
+                        )
+                    }
+                )}
+            </CollapsiblePanelComponent>
+
+            <CollapsiblePanelComponent title="دعوات الانضمام">
+                {joinRequests.map(
+                    item => {
+                        var buttons = [];
+
+                        buttons.push({
+                            icon: faCheck,
+                            onPress: acceptRequest
+                        })
+
+                        buttons.push({
+                            icon: faTimes,
+                            onPress: declineRequest
+                        })
+                        return (
+                            <CardComponent id={item.joinRequestId} texts={[`${item.firstName} ${item.lastName}`]} buttons={buttons} />
+                        )
+                    }
+                )}
+            </CollapsiblePanelComponent>
+
+            <CollapsiblePanelComponent title="الدعوات المرسلة">
+                {invitations.map(
+                    item => {
+                        var buttons = [];
+
+                        buttons.push({
+                            icon: faTimes,
+                            onPress: cancelRequest
+                        })
+                        return (
+                            <CardComponent id={item.joinRequestId} texts={[`${item.firstName} ${item.lastName}`]} buttons={buttons} />
+                        )
+                    }
+                )}
+            </CollapsiblePanelComponent>
+
+
 
 
 
