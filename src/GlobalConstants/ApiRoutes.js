@@ -13,6 +13,14 @@ exports.apiRoutes ={
     GetRoomById : (roomId) => API_URL + `api/Rooms/getRoomById/${roomId}`,
     UpdateRoom: API_URL + `api/Rooms/Update`,
 
+    DemoteOwner: API_URL + `api/Rooms/Demote`,
+    PromoteMember: API_URL + `api/Rooms/Promote`,
+    KickMember: API_URL + `api/Rooms/Kick`,
+
+    AcceptRequest: API_URL + `api/Rooms/AcceptRequest`,
+    CancelInvitaion: API_URL + `api/Rooms/CancelInvitaion`,
+    DeclineRequest: API_URL + `api/Rooms/DeclineRequest`,
+
     UpdateChore : API_URL + `api/Chores/Update`,
     CreateChore : API_URL + `api/Chores`,
     

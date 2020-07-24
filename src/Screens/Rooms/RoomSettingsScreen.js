@@ -65,27 +65,69 @@ export default function RoomDetailsScreen(props) {
     }
 
     const demoteAdmin = async (userId) => {
-        console.log(userId);
+        var data = await authPost(apiRoutes.DemoteOwner, {
+            "roomId": parseInt(roomId),
+            "userId": userId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
     const promoteMember = async (userId) => {
-        console.log(userId);
+        var data = await authPost(apiRoutes.PromoteMember, {
+            "roomId": parseInt(roomId),
+            "userId": userId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
     const kickMember = async (userId) => {
-        console.log(userId);
+        var data = await authPost(apiRoutes.KickMember, {
+            "roomId": parseInt(roomId),
+            "userId": userId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
     const acceptRequest = async (requestId) => {
-        console.log(requestId);
+        var data = await authPost(apiRoutes.AcceptRequest, {
+            "roomId": parseInt(roomId),
+            "joinRequestId": requestId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
-    const cancelRequest = async (requestId) => {
-        console.log(requestId);
+    const cancelInvitation = async (requestId) => {
+        var data = await authPost(apiRoutes.CancelInvitaion, {
+            "roomId": parseInt(roomId),
+            "joinRequestId": requestId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
     const declineRequest = async (requestId) => {
-        console.log(requestId);
+        var data = await authPost(apiRoutes.DeclineRequest, {
+            "roomId": parseInt(roomId),
+            "joinRequestId": requestId
+        });
+
+        if (data.success) {
+            getRoomDetails();
+        }
     }
 
     useEffect(() => {
@@ -115,7 +157,7 @@ export default function RoomDetailsScreen(props) {
                             icon: faArrowDown,
                             onPress: demoteAdmin
                         })
-
+                        
                         if (member.userId != userInfo.id) {
                             buttons.push({
                                 icon: faBan,
@@ -180,7 +222,7 @@ export default function RoomDetailsScreen(props) {
 
                         buttons.push({
                             icon: faTimes,
-                            onPress: cancelRequest
+                            onPress: cancelInvitation
                         })
                         return (
                             <CardComponent id={item.joinRequestId} texts={[`${item.firstName} ${item.lastName}`]} buttons={buttons} />
