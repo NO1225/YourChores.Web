@@ -7,6 +7,7 @@ import { post, authGet } from '../../GlobalConstants/ApiCalls'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
 import screens from '../../GlobalConstants/Screens'
 import AuthContext from '../../Contexts/AuthContext'
+import UserContext from '../../Contexts/UserContext'
 
 export default function SignInScreen(props) {
     const [redirect,setRedirect] = useState("");
@@ -16,16 +17,14 @@ export default function SignInScreen(props) {
     const [passward, setPassward] = useState("");
 
     const {setSignedIn} = useContext(AuthContext);
+    const {setUserInfo} = useContext(UserContext);
 
     const getUserInfo = async()=>{
         var data = await authGet(apiRoutes.GetMyInfo);
 
         if(data.success)
         {
-            await localStorage.setItem("FIRSTNAME",data.response.firstName);
-            await localStorage.setItem("LASTNAME",data.response.lastName);
-            await localStorage.setItem("USERNAME",data.response.userName);
-            await localStorage.setItem("EMAIL",data.response.email);
+            setUserInfo(data.response);
         }
     }
 

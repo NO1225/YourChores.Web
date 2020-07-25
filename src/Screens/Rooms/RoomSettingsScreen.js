@@ -64,6 +64,17 @@ export default function RoomDetailsScreen(props) {
         }
     }
 
+    const demoteAdminAlert = async (userId) => {
+        if (userId == userInfo.id) {
+            if (window.confirm('هل انت متأكد من ازالة نفسك من المالكين؟؟ ')) {
+                await demoteAdmin(userId);
+            }
+        }
+        else {
+            demoteAdmin(userId);
+        }
+    }
+
     const demoteAdmin = async (userId) => {
         var data = await authPost(apiRoutes.DemoteOwner, {
             "roomId": parseInt(roomId),
@@ -83,6 +94,13 @@ export default function RoomDetailsScreen(props) {
 
         if (data.success) {
             getRoomDetails();
+        }
+    }
+
+    const kickMemberAlert = async (userId)=>{
+        if(window.confirm("هل انت متأكد من طرد العضو؟؟"))
+        {
+            await kickMember(userId);
         }
     }
 
@@ -116,6 +134,13 @@ export default function RoomDetailsScreen(props) {
 
         if (data.success) {
             getRoomDetails();
+        }
+    }
+
+    const declineRequestAlert = async (requestId)=>{
+        if(window.confirm("هل انت  متأكد من رفضك للعضو؟؟؟"))
+        {
+            await declineRequest(requestId);
         }
     }
 
@@ -155,13 +180,13 @@ export default function RoomDetailsScreen(props) {
                         var buttons = [];
                         buttons.push({
                             icon: faArrowDown,
-                            onPress: demoteAdmin
+                            onPress: demoteAdminAlert
                         })
-                        
+
                         if (member.userId != userInfo.id) {
                             buttons.push({
                                 icon: faBan,
-                                onPress: kickMember
+                                onPress: kickMemberAlert
                             })
                         }
 
@@ -185,7 +210,7 @@ export default function RoomDetailsScreen(props) {
 
                         buttons.push({
                             icon: faBan,
-                            onPress: kickMember
+                            onPress: kickMemberAlert
                         })
                         return (
                             <CardComponent id={member.userId} texts={[`${member.firstName} ${member.lastName}`]} buttons={buttons} />
@@ -206,7 +231,7 @@ export default function RoomDetailsScreen(props) {
 
                         buttons.push({
                             icon: faTimes,
-                            onPress: declineRequest
+                            onPress: declineRequestAlert
                         })
                         return (
                             <CardComponent id={item.joinRequestId} texts={[`${item.firstName} ${item.lastName}`]} buttons={buttons} />
