@@ -30,5 +30,8 @@ screens.goToRoomDetails = (roomId)=> screens.RoomsRouter + `/RoomDetails/${roomI
 screens.RoomSettings = screens.RoomsRouter + '/RoomSettings/:roomId';
 screens.goToRoomSettings = (roomId)=> screens.RoomsRouter + `/RoomSettings/${roomId}`;
 
+screens.FindMember = screens.RoomsRouter + '/FindMember/:roomId';
+screens.goToFindMember = (roomId)=> screens.RoomsRouter + `/FindMember/${roomId}`;
+
 
 module.exports = screens;

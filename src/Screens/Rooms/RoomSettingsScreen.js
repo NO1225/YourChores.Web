@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { faArrowDown, faArrowUp, faTimes, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
 
@@ -97,9 +97,8 @@ export default function RoomDetailsScreen(props) {
         }
     }
 
-    const kickMemberAlert = async (userId)=>{
-        if(window.confirm("هل انت متأكد من طرد العضو؟؟"))
-        {
+    const kickMemberAlert = async (userId) => {
+        if (window.confirm("هل انت متأكد من طرد العضو؟؟")) {
             await kickMember(userId);
         }
     }
@@ -137,9 +136,8 @@ export default function RoomDetailsScreen(props) {
         }
     }
 
-    const declineRequestAlert = async (requestId)=>{
-        if(window.confirm("هل انت  متأكد من رفضك للعضو؟؟؟"))
-        {
+    const declineRequestAlert = async (requestId) => {
+        if (window.confirm("هل انت  متأكد من رفضك للعضو؟؟؟")) {
             await declineRequest(requestId);
         }
     }
@@ -168,6 +166,9 @@ export default function RoomDetailsScreen(props) {
             <div className="d-flex justify-content-between m-3">
                 <div>
                     اعدادات غرفة {roomName}
+                </div>
+                <div>
+                    <Link className="btn btn-light" to={screens.goToFindMember(roomId)} >البحث عن عضو</Link>
                 </div>
                 <Form.Group className="ltr d-flex justify-content-around">
                     <Form.Check label="السماح للاعضاء بالنشر" defaultChecked={allowMembersToPost} onChange={(e) => changeAllowMemberToPost(e.target.checked)} />

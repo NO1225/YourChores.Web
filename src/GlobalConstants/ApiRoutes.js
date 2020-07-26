@@ -15,7 +15,11 @@ exports.apiRoutes ={
 
     DemoteOwner: API_URL + `api/Rooms/Demote`,
     PromoteMember: API_URL + `api/Rooms/Promote`,
+    FindMember: API_URL + `api/Rooms/FindMember`,
     KickMember: API_URL + `api/Rooms/Kick`,
+
+    Invite: API_URL + `api/Rooms/Invite`,
+
 
     AcceptRequest: API_URL + `api/Rooms/AcceptRequest`,
     CancelInvitaion: API_URL + `api/Rooms/CancelInvitaion`,

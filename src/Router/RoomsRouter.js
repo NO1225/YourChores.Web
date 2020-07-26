@@ -13,6 +13,7 @@ import screens from '../GlobalConstants/Screens';
 import RoomsScreen from '../Screens/Rooms/RoomsScreen'
 import RoomDetailsScreen from '../Screens/Rooms/RoomDetailsScreen'
 import RoomSettingsScreen from '../Screens/Rooms/RoomSettingsScreen'
+import FindMemberScreen from '../Screens/Rooms/FindMemberScreen'
 
 export default function RoomsRouter() {
     let match = useRouteMatch();
@@ -28,6 +29,9 @@ export default function RoomsRouter() {
                 </Route>
                 <Route path={screens.RoomSettings}>
                     <RoomSettingsScreen />
+                </Route>
+                <Route path={screens.FindMember}>
+                    <FindMemberScreen />
                 </Route>
             </Switch>
         </div>
