@@ -1,24 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, redirect, Redirect } from 'react-router-dom'
 
 import screens from '../../GlobalConstants/Screens'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
 import { authPost, authGet } from '../../GlobalConstants/ApiCalls'
+import UserContext from '../../Contexts/UserContext'
 
 import ChoreComponent from '../../Components/ChoreComponent'
 import CreateChoreComponent from '../../Components/CreateChoreComponent'
 import Modal from '../../Components/ModalComponent'
+import LeavingRoomComponent from '../../Components/LeavingRoomComponent';
 
 export default function RoomDetailsScreen(props) {
     let { roomId } = useParams();
+    let { userInfo } = useContext(UserContext)
 
     const [redirect, setRedirect] = useState("");
 
     const [chores, setChores] = useState([])
     const [roomName, setRoomName] = useState("");
     const [allowChoreCreation, setAllowChoreCreation] = useState(false);
-    const [isOwner, setIsOwener] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     const [choreCreationPopupVisible, setChoreCreationPopupVisible] = useState(false);
+
+    const [leavingRoomPopupVisible, setLeavingRoomPopupVisible] = useState(false);
+    const [showAlternative, setShowAlternative] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
+
+    const [roomMembers, setRoomMembers] = useState([]);
 
 
     const getRoomDetails = async () => {
@@ -33,7 +42,7 @@ export default function RoomDetailsScreen(props) {
 
             setChores(data.response.chores);
             setRoomName(data.response.roomName);
-            setIsOwener(data.response.isOwner);
+            setIsOwner(data.response.isOwner);
             var allow = false;
 
             if (data.response.isOwner) {
@@ -44,6 +53,13 @@ export default function RoomDetailsScreen(props) {
             }
 
             setAllowChoreCreation(allow);
+
+            if (data.response.roomMembers) {
+                setRoomMembers(data.response.roomMembers);
+            }
+            else {
+                setRoomMembers([]);
+            }
         }
     }
 
@@ -61,6 +77,50 @@ export default function RoomDetailsScreen(props) {
     const redirectToRoomSettings = () => {
         setRedirect(screens.goToRoomSettings(roomId));
 
+    }
+
+    const hundleLeavingTheRoom = async () => {
+        var owners = await roomMembers.filter(roomMember => roomMember.isOwner);
+        var alone = owners.length == 1;
+        console.log(alone);
+        console.log(owners);
+        console.log(roomMembers);
+        if (isOwner == false) {
+            setShowAlternative(false);
+            setPopupMessage("هل انت متأكد من مغادرة الغرفة؟؟");
+            setLeavingRoomPopupVisible(true);
+        }
+        else if (roomMembers.length == 1) {
+            setShowAlternative(false);
+            setPopupMessage("سيتم حذف الغرفة حال مغادرتك، هل انت متأكد من مغادرة الغرفة؟؟");
+            setLeavingRoomPopupVisible(true);
+        }
+        else if (alone) {
+            setShowAlternative(true);
+            setPopupMessage("انت اخر مالك لهذه الغرفة، قم باختيار مالك بديل لادارة الغرفة بعد مغادرتك!");
+            setLeavingRoomPopupVisible(true);
+        }
+        else {
+            setShowAlternative(false);
+            setPopupMessage("هل انت متأكد من مغادرة الغرفة؟؟");
+            setLeavingRoomPopupVisible(true);
+        }
+    }
+
+    const leaveRoom = async (alternativeId = null) => {
+        console.log({
+            roomId: roomId,
+            alternativeId: alternativeId
+        })
+
+        var data = await authPost(apiRoutes.LeaveRoom, {
+            roomId: parseInt(roomId),
+            alternativeId: alternativeId
+        })
+
+        if (data.success) {
+            setRedirect(screens.RoomsScreen);
+        }
     }
 
 
@@ -82,6 +142,15 @@ export default function RoomDetailsScreen(props) {
             <Modal visible={choreCreationPopupVisible}>
                 <CreateChoreComponent roomId={roomId} onFormEnd={hundleRoomCreationEnd} />
             </Modal>
+            <Modal visible={leavingRoomPopupVisible}>
+                <LeavingRoomComponent onFormEnd={() => setLeavingRoomPopupVisible(false)}
+                    confirmationMessage={popupMessage}
+                    alternativeIds={roomMembers}
+                    currentUserId={userInfo.id}
+                    showAlternative={showAlternative}
+                    onConfirm={leaveRoom}
+                />
+            </Modal>
 
             <div className="d-flex justify-content-between m-3">
                 <div>
@@ -97,6 +166,9 @@ export default function RoomDetailsScreen(props) {
                         <button className="btn btn-light" onClick={redirectToRoomSettings} type="button" >اعدادات الغرفة</button>
                     </div>
                     : null}
+                <div>
+                    <button className="btn btn-light" onClick={hundleLeavingTheRoom} type="button" >مغادرة الغرفة</button>
+                </div>
             </div>
             {chores.map(chore =>
                 <ChoreComponent key={chore.choreId} chore={chore} onUpdate={getRoomDetails} />
