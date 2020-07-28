@@ -28,5 +28,6 @@ exports.apiRoutes ={
 
     UpdateChore : API_URL + `api/Chores/Update`,
     CreateChore : API_URL + `api/Chores`,
+    GetMyChores : API_URL + `api/Chores`,
     
 }

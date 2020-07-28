@@ -28,19 +28,22 @@ export default function SettingItemComponent(props) {
 
     const hundleClicking = async (e) => {
         e.preventDefault();
-        if(props.chore.done)
-        {
+        if (props.chore.done) {
             return;
         }
-        var data = await authPost(apiRoutes.UpdateChore, {
-            "choreId": props.chore.choreId,
-            "roomId": parseInt(props.chore.roomId)
-        })
-        console.log(data);
 
-        if (data.success) {
-            props.onUpdate();
+        if (window.confirm("هل انت متأكد من اتمامك للواجب؟؟؟")) {
+            var data = await authPost(apiRoutes.UpdateChore, {
+                "choreId": props.chore.choreId,
+                "roomId": parseInt(props.chore.roomId)
+            })
+
+            if (data.success) {
+                props.onUpdate();
+            }
         }
+
+
     }
 
     return (
