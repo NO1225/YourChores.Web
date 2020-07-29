@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, redirect, Redirect } from 'react-router-dom'
+import { Form } from 'react-bootstrap'
+
 
 import screens from '../../GlobalConstants/Screens'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
+import { choreState, papulateOptions } from '../../GlobalConstants/Enums'
 import { authPost, authGet } from '../../GlobalConstants/ApiCalls'
 import UserContext from '../../Contexts/UserContext'
 
@@ -29,8 +32,10 @@ export default function RoomDetailsScreen(props) {
 
     const [roomMembers, setRoomMembers] = useState([]);
 
+    const [selectedChoreState, setSelectedChoreState] = useState(choreState.All);
 
-    const getRoomDetails = async () => {
+
+    const getRoomDetails = async (choreStateFilter) => {
         var data = await authGet(apiRoutes.GetRoomById(roomId));
 
         if (data.success) {
@@ -40,7 +45,16 @@ export default function RoomDetailsScreen(props) {
                 chore.roomId = roomId;
             });
 
-            setChores(data.response.chores);
+            if (choreStateFilter == choreState.Done) {
+                setChores(await data.response.chores.filter(chore => chore.done));
+            }
+            else if (choreStateFilter == choreState.Pending) {
+                setChores(await data.response.chores.filter(chore => !chore.done));
+            }
+            else {
+                setChores(data.response.chores);
+            }
+
             setRoomName(data.response.roomName);
             setIsOwner(data.response.isOwner);
             var allow = false;
@@ -69,22 +83,19 @@ export default function RoomDetailsScreen(props) {
 
     const hundleRoomCreationEnd = (value) => {
         if (true) {
-            getRoomDetails();
+            getRoomDetails(selectedChoreState);
         }
         hundleChoreCreation();
     }
 
     const redirectToRoomSettings = () => {
         setRedirect(screens.goToRoomSettings(roomId));
-
     }
 
     const hundleLeavingTheRoom = async () => {
         var owners = await roomMembers.filter(roomMember => roomMember.isOwner);
         var alone = owners.length == 1;
-        console.log(alone);
-        console.log(owners);
-        console.log(roomMembers);
+
         if (isOwner == false) {
             setShowAlternative(false);
             setPopupMessage("هل انت متأكد من مغادرة الغرفة؟؟");
@@ -123,10 +134,15 @@ export default function RoomDetailsScreen(props) {
         }
     }
 
+    const hundleFilterChange = (e) => {
+        setSelectedChoreState(e.target.value);
+        getRoomDetails(e.target.value);
+    }
+
 
 
     useEffect(() => {
-        getRoomDetails()
+        getRoomDetails(selectedChoreState)
         return () => {
 
         }
@@ -170,8 +186,15 @@ export default function RoomDetailsScreen(props) {
                     <button className="btn btn-light" onClick={hundleLeavingTheRoom} type="button" >مغادرة الغرفة</button>
                 </div>
             </div>
+            <div>
+                <Form.Control as="select" value={selectedChoreState} onChange={hundleFilterChange}>
+                    {papulateOptions(choreState).map(option =>
+                        <option value={option.value} key={option.key}>{option.text}</option>
+                    )}
+                </Form.Control>
+            </div>
             {chores.map(chore =>
-                <ChoreComponent key={chore.choreId} chore={chore} onUpdate={getRoomDetails} />
+                <ChoreComponent key={chore.choreId} chore={chore} onUpdate={() => getRoomDetails(selectedChoreState)} />
             )}
         </div>
     )

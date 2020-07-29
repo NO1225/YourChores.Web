@@ -34,6 +34,42 @@ exports.joinRequestType = {
     }
 }
 
+exports.choreState = {
+    All: 1,
+    Pending: 2,
+    Done: 3,
+    translate: (value) => {
+        switch (value) {
+            case 1:
+            case '1':
+                return "الجميع";
+            case 2:
+            case '2':
+                return "قيد الانتظار";
+            case 3:
+            case '3':
+                return "المنجز";
+        }
+    }
+}
+
+
+exports.sortBy = {
+    MostRecent: 1,
+    Urgency: 2,
+    translate: (value) => {
+        switch (value) {
+            case 1:
+            case '1':
+                return "الاحدث";
+            case 2:
+            case '2':
+                return "الاهم";
+
+        }
+    }
+}
+
 exports.papulateOptions = (enums) => {
     var options = [];
     for (var key in enums) {
