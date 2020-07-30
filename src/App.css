@@ -27,8 +27,11 @@
 }
 
 .footer{
+  margin:0;
   bottom: 0px;
   position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
 .setting-item-title{
@@ -131,5 +134,9 @@
   margin: 2px;
   display: grid;
   grid-template-columns: 1fr auto;
+}
+
+.landing-page-container{
+  background-color: #dceff1 ;
 }
 
