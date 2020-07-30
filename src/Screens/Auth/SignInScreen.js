@@ -3,7 +3,8 @@ import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 
-import { post, authGet } from '../../GlobalConstants/ApiCalls'
+import { post } from '../../GlobalConstants/ApiCalls'
+import { authGet } from '../../GlobalConstants/ApiCalls'
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes'
 import screens from '../../GlobalConstants/Screens'
 import AuthContext from '../../Contexts/AuthContext'

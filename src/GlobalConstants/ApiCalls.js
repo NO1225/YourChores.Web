@@ -1,4 +1,4 @@
-exports.post = async (apiRoute, body) => {
+export async function post(apiRoute, body) {
     try {
         var res = await fetch(apiRoute, {
             method: "post",
@@ -20,7 +20,7 @@ exports.post = async (apiRoute, body) => {
     }
 }
 
-exports.authPost = async (apiRoute, body) => {
+export async function authPost(apiRoute, body) {
     try {
         var token = localStorage.getItem("TOKEN");
 
@@ -46,7 +46,7 @@ exports.authPost = async (apiRoute, body) => {
 }
 
 
-exports.get = async (apiRoute, body) => {
+export async function get(apiRoute, body) {
     try {
         var res = await fetch(apiRoute)
 
@@ -62,7 +62,7 @@ exports.get = async (apiRoute, body) => {
     }
 }
 
-exports.authGet = async (apiRoute, body) => {
+export async function authGet(apiRoute, body) {
     try {
         var token = localStorage.getItem("TOKEN");
 

@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../Contexts/UserContext'
 
 import { apiRoutes } from '../../GlobalConstants/ApiRoutes';
-import { authGet, authPost } from '../../GlobalConstants/ApiCalls'
+import { authPost,  authGet } from '../../GlobalConstants/ApiCalls'
 
 import SettingItemComponent from '../../Components/SettingItemComponent'
 import SettingPasswordComponent from '../../Components/SettingPasswordComponent'
