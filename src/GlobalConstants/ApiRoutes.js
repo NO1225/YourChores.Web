@@ -1,4 +1,4 @@
-const API_URL = "http://yourchores.me/"
+const API_URL = "https://api.yourchores.me/"
 
 exports.apiRoutes ={
     SignUp : API_URL + `api/Auth/Register`,
